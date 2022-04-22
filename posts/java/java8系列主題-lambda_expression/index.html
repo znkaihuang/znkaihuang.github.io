@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Java 8 - Lambda Expression | On avance</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Lambda Expression (Lambda 表達式) 的出現使的開發人員能夠用更簡潔的語法達到 Anonymous Classes (匿名類別) 所能達到的功能，前提是原有寫法的 Anonymous Class 裡只有單一 method。">
+    <meta name="generator" content="Hugo 0.97.3" />
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+    
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Java 8 - Lambda Expression" />
+<meta property="og:description" content="Lambda Expression (Lambda 表達式) 的出現使的開發人員能夠用更簡潔的語法達到 Anonymous Classes (匿名類別) 所能達到的功能，前提是原有寫法的 Anonymous Class 裡只有單一 method。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-lambda_expression/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-21T18:44:46+08:00" />
+<meta property="article:modified_time" content="2022-04-21T18:44:46+08:00" />
+
+<meta itemprop="name" content="Java 8 - Lambda Expression">
+<meta itemprop="description" content="Lambda Expression (Lambda 表達式) 的出現使的開發人員能夠用更簡潔的語法達到 Anonymous Classes (匿名類別) 所能達到的功能，前提是原有寫法的 Anonymous Class 裡只有單一 method。"><meta itemprop="datePublished" content="2022-04-21T18:44:46+08:00" />
+<meta itemprop="dateModified" content="2022-04-21T18:44:46+08:00" />
+<meta itemprop="wordCount" content="269">
+<meta itemprop="keywords" content="Java 8," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java 8 - Lambda Expression"/>
+<meta name="twitter:description" content="Lambda Expression (Lambda 表達式) 的出現使的開發人員能夠用更簡潔的語法達到 Anonymous Classes (匿名類別) 所能達到的功能，前提是原有寫法的 Anonymous Class 裡只有單一 method。"/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        On avance
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/contact/" title="Contact page">
+              Contact
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div>
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        ARTICLES
+      </aside>
+      
+
+
+
+
+
+
+
+
+
+
+  <div id="sharing" class="mt3 ananke-socials">
+    
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Java 8 - Lambda Expression</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2022-04-21T18:44:46+08:00">April 21, 2022</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>Lambda Expression (Lambda 表達式) 的出現使的開發人員能夠用更簡潔的語法達到 Anonymous Classes (匿名類別)
+所能達到的功能，前提是原有寫法的 Anonymous Class 裡只有單一 method。</p>
+<p>讓我們先快速看過何謂 Anonymous Classes，假設現在有一 interface PersonCheckInterface 宣告如下：</p>
+<pre tabindex="0"><code>interface PersonCheckInterface {
+    public boolean check(Person person);
+}
+</code></pre><p>有一段程式碼試試圖對 instantiate (實例化) interface PersonCheckInterface 並實作 method check</p>
+<pre tabindex="0"><code>PersonCheckInterface personCheck = new PersonCheckInterface() {
+    public boolean check(Person person) {
+        return (person.getAge() &gt;= 20) ? true : false;
+    } 
+}
+</code></pre><p>上段程式碼中產生了 Anonymous Class ，這個 Anonymous Class implements PersonCheckInterface 且為 interface 下
+的 method 提供實作細節。在 Oracle Java Tutorials 對
+<a href="https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html">Anonymous Class</a>
+包含哪些要素講的十分清楚，包含：</p>
+<ul>
+<li>New operator</li>
+<li>被 implements 的 interface 或是 extends 的 class 名稱</li>
+<li>括弧，括弧內部包含需要傳入 Constructor 的參數，如果不需要參數可以僅用空括弧 () 表示</li>
+<li>Declaration body，和宣告一般 Class 裡的內容同樣</li>
+</ul>
+<p>了解 Anonymous Class 之後，回歸正談，讓我們透過 Lambda Expression 精簡上述程式碼。由於 PersonCheckInterface 只有
+宣告單一 method ，因此上述程式碼使用 Lambda Expression 改寫後如下：</p>
+<pre tabindex="0"><code>PersonCheckInterface personCheck = person -&gt; {
+    return (person.getAge() &gt;= 20) ? true : false;
+};
+</code></pre><p>和之前的程式碼相比，Lambda Expression 不需要 instantiate ，因此如果你有注意會發現使用 Lambda Expression 後 Compile
+產生的 .class 檔會比原本使用 Anonymous Class 寫法產生的 .class 檔少。從這裡可以明白使用 Lambda Expression 的好處。</p>
+<p>Lambda Expression 的語法可以表示為</p>
+<ul>
+<li>括弧包含 Override Method 裡的參數，如果只有單一參數，可以不用括弧。以上述為例， method check 只會接收單一參數 Person person，
+因此不括弧包含的寫法 (person) ，使用 person 僅可。</li>
+<li>箭頭符號 <code>-&gt;</code></li>
+<li>主體，包含單一 expression 或是 statement block。以上述為例，使用 statement block 明確表示 method check 的實作應該
+如何 return。如果實作的 method return type 為 void 並且只有一行 expression ，可以大括弧。舉例，假設 method check return type
+現在是 void ，並且我想要印出 person.getAge() 資訊，上述的程式碼將會是</li>
+</ul>
+<pre tabindex="0"><code>PersonCheckInterface personCheck = person -&gt; System.out.println(person.getAge());
+</code></pre><p>最後，我寫了簡單的程式碼供練習，連結如下</p>
+<p><a href="https://github.com/znkaihuang/lambda-practice/tree/lambda-expression-practice">LambdaExpressionPractice</a></p>
+<p>在 <a href="https://github.com/znkaihuang/lambda-practice/blob/lambda-expression-practice/LambdaExpressionPractice/src/com/lessayer/entity/test/RosterMyTest.java#L30">RosterMyTest.java</a> 註解地方加入 Lambda Expression 並執行程式</p>
+<pre tabindex="0"><code>Verifier.verifyAgeIsGreaterOrEqualTo18(/* Enter your lambda expression here */);
+Verifier.verifyGenderIsMale(/* Enter your lambda expression here */);
+Verifier.verifyEmailIsAtTestDotCom(/* Enter your lambda expression here */);
+Verifier.verifyMaleLessThan30(/* Enter your lambda expression here */);
+</code></pre><p>如果正確，執行結果會顯示 PASS</p>
+<pre tabindex="0"><code>==========================================
+Verify Your Answer
+==========================================
+  FilterAgeIsGreaterOrEqualTo18Test: Pass
+  FilterGenderIsMaleTest: Pass
+  FilterEmailIsAtTestDotComTest: Pass
+  FilterMaleLessThan30Test: Pass
+</code></pre><p>如果有任何問題，歡迎<a href="/contace">聯絡我</a>。在進入下個主題 Stream API 之前，我會再寫一篇 Functional Interface 以及
+Method References 的文章，作為 Lambda Expression 支援的延伸應用，為 Lambda Expression 這個主題做結尾。</p>
+<ul class="pa0">
+  
+   <li class="list di">
+     <a href="/tags/java-8" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Java 8</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C/">Java 8 新增特性</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://znkaihuang.github.io" >
+    &copy;  On avance 2022 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div></div>
+  </div>
+</footer>
+
+  </body>
+</html>
