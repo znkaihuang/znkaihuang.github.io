@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Java 8 - Functional Interface &amp; Method Reference | On avance</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="在前一篇 Java 8 - Lambda Expression 提到， Labmda Expression 可以讓開發者 用更簡潔的語法撰寫原有 Anonymous Class 有的功能，然而前提是 Anonymous Class 所 implements 的 interface 必須只包 含單一 Method 。這類 interface 就是所謂 functional interface 。">
+    <meta name="generator" content="Hugo 0.97.3" />
+    
+    
+    
+    
+      <meta name="robots" content="index, follow">
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.ea09cb1d7acc04e011e2cbaf51b0fe414b7ef882d7d49c89f261c58fe1fbe3aa.css" >
+
+
+
+    
+    
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Java 8 - Functional Interface &amp; Method Reference" />
+<meta property="og:description" content="在前一篇 Java 8 - Lambda Expression 提到， Labmda Expression 可以讓開發者 用更簡潔的語法撰寫原有 Anonymous Class 有的功能，然而前提是 Anonymous Class 所 implements 的 interface 必須只包 含單一 Method 。這類 interface 就是所謂 functional interface 。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-functional_interface/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-29T09:12:17+08:00" />
+<meta property="article:modified_time" content="2022-04-29T09:12:17+08:00" />
+
+<meta itemprop="name" content="Java 8 - Functional Interface &amp; Method Reference">
+<meta itemprop="description" content="在前一篇 Java 8 - Lambda Expression 提到， Labmda Expression 可以讓開發者 用更簡潔的語法撰寫原有 Anonymous Class 有的功能，然而前提是 Anonymous Class 所 implements 的 interface 必須只包 含單一 Method 。這類 interface 就是所謂 functional interface 。"><meta itemprop="datePublished" content="2022-04-29T09:12:17+08:00" />
+<meta itemprop="dateModified" content="2022-04-29T09:12:17+08:00" />
+<meta itemprop="wordCount" content="380">
+<meta itemprop="keywords" content="Java 8," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java 8 - Functional Interface &amp; Method Reference"/>
+<meta name="twitter:description" content="在前一篇 Java 8 - Lambda Expression 提到， Labmda Expression 可以讓開發者 用更簡潔的語法撰寫原有 Anonymous Class 有的功能，然而前提是 Anonymous Class 所 implements 的 interface 必須只包 含單一 Method 。這類 interface 就是所謂 functional interface 。"/>
+
+      
+    
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        On avance
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/contact/" title="Contact page">
+              Contact
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div>
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        ARTICLES
+      </aside>
+      
+
+
+
+
+
+
+
+
+
+
+  <div id="sharing" class="mt3 ananke-socials">
+    
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Java 8 - Functional Interface &amp; Method Reference</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2022-04-29T09:12:17+08:00">April 29, 2022</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>在前一篇 <a href="../java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-lambda_expression">Java 8 - Lambda Expression</a> 提到， Labmda Expression 可以讓開發者
+用更簡潔的語法撰寫原有 Anonymous Class 有的功能，然而前提是 Anonymous Class 所 implements 的 interface 必須只包
+含單一 Method 。這類 interface 就是所謂 functional interface 。</p>
+<p>Java 8 引進了新的 Annotation @FunctionalInterface ，假設開發者自定義了 interface 並且此 interface 只有單一
+abstract method ，則開發人員為這個 interface
+標注 @FunctionalInterface 。</p>
+<p><span style="color: darkred">(<strong>!!注意，functional interface 只有一個 abstract method，但可能有其他 default methods</strong>)</span></p>
+<p>實際上，根據 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html">Java 8 API</a> ，
+開發人員可以不需要標注 @FunctionalInterface ， compiler 在編譯過程就會將符合條件的 interface 視為 functional interface 。</p>
+<p>舉一些 functional interface 的例子：</p>
+<pre tabindex="0"><code>interface MyFunctionalInterface {
+    boolean test(int number);
+}
+</code></pre><pre tabindex="0"><code>interface CheckPersonInterface {
+    boolean checkCondition(Person person);
+    default printPerson(Person person) {
+        System.out.println(&#34;Name: &#34; + person.getName());
+    }
+}
+</code></pre><p>注意第二個例子， CheckPersonInterface 裡宣告兩個 methods ，但是 printPerson 是 default method ，因此實際上
+CheckPersonInterface 還是只有單一 abstract method ，符合 functional interface 的定義。</p>
+<p>除了自定義 functional interface 之外， Java 8 新增 Package java.util.function ，裡面許多預設的 functional interface
+提供開發人員使用，詳細可參閱 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html">Package java.util.function API</a> ，以下列出幾項。</p>
+<ul>
+<li>Consumer<T>      : Represents an operation that accepts a single input argument and returns no result.</li>
+<li>Predicate<T>     : Represents a predicate (boolean-valued function) of one argument.</li>
+<li>Function&lt;T,R&gt;    : Represents a function that accepts one argument and produces a result.</li>
+<li>Supplier<T>      : Represents a supplier of results.</li>
+<li>UnaryOperator<T> : Represents an operation on a single operand that produces a result of the same type as its operand.</li>
+</ul>
+<p>同樣的，我提供簡單的<a href="https://github.com/znkaihuang/lambda-practice/tree/functional-interface-practice">程式碼提供練習</a>，
+試著將以下的註解，使用 Java 8 所提供的 functional interface 寫出 Lambda expression。</p>
+<pre tabindex="0"><code>FunctionalInterfacePractice/src/com/lessayer/test/RosterMyTest.java
+============================================================================
+Line 25: 		DogFilter.searchDog(/* Write your code here! */)
+Line 30:		dogShelter.adoptDog(/* Write your code here! */);
+Line 34:		dogShelter.rescueDog(/* Write your code here! */);
+Line 44:		dogShelter.rescueDog(/* Write your code here! */);
+</code></pre><p>有時候，開發者使用 Lambda expression 只是想呼叫現有的方法，最常見的例子為呼叫 System.out.println ，這時 Method Reference
+提供了簡潔的寫法，讓 Lambda expression 更加俐落。</p>
+<pre tabindex="0"><code>List&lt;String&gt; stringList = new ArrayList&lt;&gt;();
+stringList.add(&#34;Nice to meet you!&#34;);
+stringList.add(&#34;Long time not see!&#34;);
+stringList.foreach(s -&gt; System.out.println(s));
+</code></pre><p>上述印出每個 List elements 可以使用 Method Reference 讓程式碼更俐落：</p>
+<pre tabindex="0"><code>stringList.foreach(System.out::println);
+</code></pre><p>Method Reference 的概念並不複雜，可以參考 <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Oracle 官方文件</a>
+<strong>Kinds of Method References</strong> 的部份。</p>
+<p>最後，附上程式碼供讀者練習，連結為 <a href="https://github.com/znkaihuang/lambda-practice/tree/method-reference-practice">MethodReferencePractice</a> 。
+練習為簡單的國際匯率轉換，將以 EUR 歐元計價的商品轉換成其他國際貨幣。除了需要寫 Method Reference 程式碼之外，</p>
+<pre tabindex="0"><code>src/com/lessayer/ExchangeRateTest.java
+		product1.printProductInfo(Currency.EUR, /* Write your code here! */);
+		product1.printProductInfo(Currency.USD, /* Write your code here! */);
+		product1.printProductInfo(Currency.JPY, /* Write your code here! */);
+</code></pre><p>還需要設計 class CurrencyConvertor 裡的  static public Float convertCurrency 。</p>
+<pre tabindex="0"><code>class CurrencyConvertor {
+	
+	private static final Map&lt;Currency, Float&gt; exchangeRateTable;
+	static {
+		HashMap&lt;Currency, Float&gt; map = new HashMap&lt;&gt;();
+		map.put(Currency.AUD, 1.48f);
+		map.put(Currency.CAD, 1.35f);
+		map.put(Currency.CHF, 1.02f);
+		map.put(Currency.CNY, 6.95f);
+		map.put(Currency.EUR, 1.0f);
+		map.put(Currency.GBP, 0.84f);
+		map.put(Currency.JPY, 136.70f);
+		map.put(Currency.USD, 1.05f);
+		exchangeRateTable = map;
+	}
+	
+	/* Write your code here! 
+	 * static public Float convertCurrency(...) {
+	 * 	   ...
+	 * } */
+
+}
+</code></pre><p>如果有任何問題，歡迎<a href="contact">聯絡我</a>。</p>
+<ul class="pa0">
+  
+   <li class="list di">
+     <a href="/tags/java-8" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Java 8</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-lambda_expression/">Java 8 - Lambda Expression</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C/">Java 8 新增特性</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://znkaihuang.github.io" >
+    &copy;  On avance 2022 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div></div>
+  </div>
+</footer>
+
+  </body>
+</html>
