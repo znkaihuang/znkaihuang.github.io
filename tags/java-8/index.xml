@@ -6,7 +6,16 @@
     <description>Recent content in Java 8 on On avance</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 Apr 2022 09:12:17 +0800</lastBuildDate><atom:link href="https://znkaihuang.github.io/tags/java-8/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 06 May 2022 09:46:47 +0800</lastBuildDate><atom:link href="https://znkaihuang.github.io/tags/java-8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 8 - Stream API</title>
+      <link>https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-stream_api/</link>
+      <pubDate>Fri, 06 May 2022 09:46:47 +0800</pubDate>
+      
+      <guid>https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-stream_api/</guid>
+      <description>自 Java 8 引入 Stream API 後， 為 Java 開發人員提供宣告式( Declarative )的方式來處理資料。</description>
+    </item>
+    
     <item>
       <title>Java 8 - Functional Interface &amp; Method Reference</title>
       <link>https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-functional_interface/</link>

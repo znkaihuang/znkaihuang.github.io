@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Java 8 - Stream API | On avance</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="自 Java 8 引入 Stream API 後， 為 Java 開發人員提供宣告式( Declarative )的方式來處理資料。">
+    <meta name="generator" content="Hugo 0.97.3" />
+    
+    
+    
+    
+      <meta name="robots" content="index, follow">
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.ea09cb1d7acc04e011e2cbaf51b0fe414b7ef882d7d49c89f261c58fe1fbe3aa.css" >
+
+
+
+    
+    
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Java 8 - Stream API" />
+<meta property="og:description" content="自 Java 8 引入 Stream API 後， 為 Java 開發人員提供宣告式( Declarative )的方式來處理資料。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-stream_api/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-06T09:46:47+08:00" />
+<meta property="article:modified_time" content="2022-05-06T09:46:47+08:00" />
+
+<meta itemprop="name" content="Java 8 - Stream API">
+<meta itemprop="description" content="自 Java 8 引入 Stream API 後， 為 Java 開發人員提供宣告式( Declarative )的方式來處理資料。"><meta itemprop="datePublished" content="2022-05-06T09:46:47+08:00" />
+<meta itemprop="dateModified" content="2022-05-06T09:46:47+08:00" />
+<meta itemprop="wordCount" content="355">
+<meta itemprop="keywords" content="Java 8," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java 8 - Stream API"/>
+<meta name="twitter:description" content="自 Java 8 引入 Stream API 後， 為 Java 開發人員提供宣告式( Declarative )的方式來處理資料。"/>
+
+      
+    
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        On avance
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/contact/" title="Contact page">
+              Contact
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div>
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        ARTICLES
+      </aside>
+      
+
+
+
+
+
+
+
+
+
+
+  <div id="sharing" class="mt3 ananke-socials">
+    
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Java 8 - Stream API</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2022-05-06T09:46:47+08:00">May 6, 2022</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>自 Java 8 引入 Stream API 後， 為 Java 開發人員提供宣告式( Declarative )的方式來處理資料。</p>
+<p>什麼是<a href="https://zh.wikipedia.org/zh-tw/%E5%AE%A3%E5%91%8A%E5%BC%8F%E7%B7%A8%E7%A8%8B">宣告式程式設計</a> ( Declarative programming )，
+大致概念為在開發的過程當中，只告訴電腦運算邏輯但不需要
+描述運算過程。實際的例子像是 SQL 或是 Regex ，在使用 SQL 搜尋資料庫時，開發人員只提供了查詢條件，而不需
+考慮實際查詢是如何完成的。</p>
+<p>回歸 Stream 主題， Stream 有別於傳統的 Collection ， Stream 並不是儲存元素的資料結構。以常用的 Collection List 當作對照，List 裡儲存
+的都是個別元素，如果需要對 List 裡每個元素進行任何操作，以往的作法通常都是使用迴圈，逐一取出 List 每個元素操作完後在放回 List 裡
+，當這些操作完成時，原有的 List 已經被改動。</p>
+<p>Stream 提供的則是截然不同的方式，想像原本的 List 裡的每個元素以串流的方式流入管道 ( Pipeline )，在管道流通的過程同時對流動的元素進行加工
+，最後加工完成的元素會被另外的容器像是另一個 List 收集起來，不需要迴圈也不會對原本的資料來源產生影響，這大致上就是 Stream 的原理。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="/images/java/pipeline.png" alt="Pipeline.png"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><small>來源：<a><a href="http://www.pybloggers.com/2017/01/what-is-data-engineering/">http://www.pybloggers.com/2017/01/what-is-data-engineering/</a><a><small></td>
+</tr>
+</tbody>
+</table>
+<p>以下是實際使用 Stream API 的例子：</p>
+<pre tabindex="0"><code>List&lt;Product&gt; productList = Arrays.asList(
+	new Product(1, &#34;Toast&#34;, ProductType.Bakery, 2.0, &#34;France&#34;), new Product(2, &#34;Croissant&#34;, ProductType.Bakery, 2.2, &#34;France&#34;),
+	new Product(5, &#34;Soy Bean Milk&#34;, ProductType.Beverage, 6.2, &#34;France&#34;), new Product(6, &#34;Cheese&#34;, ProductType.Dairy, 6.2, &#34;France&#34;),
+	new Product(8, &#34;Apple&#34;, ProductType.Fruit, 3.1, &#34;France&#34;));
+
+List&lt;Product&gt; bakeryList = productList.stream()
+				.filter(product -&gt; product.getType() == ProductType.Bakery )
+				.collect(Collectors.toList());
+</code></pre><p>從上述例子，省去使用迴圈判斷元素並逐次加入新的 List 的情況下，Stream Pipeline 的語法更加簡潔。語法上 Pipeline 包含以下要素：</p>
+<ul>
+<li>來源 ( Source )</li>
+<li>零或多個中間運算 ( Intermediate operation ) ，回傳值是 Stream ，代表將當前處理完的 Stream 流入之後的 operation</li>
+<li>最終運算 ( Terminal operation ) ，回傳 Non-Stream 結果，可以是 primitive value 、 Collection 或是什麼也不回傳</li>
+</ul>
+<p>上述例子， source 為 productList ，僅有 filter() 這一個 intermediate operation ，以及最後 collect() 這個 terminal operation 。</p>
+<p>我列出了一些 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html">Stream API</a> 的 intermediate operation
+以及 terminal operation 當作參考：</p>
+<ul>
+<li><strong>Intermediate operations</strong>
+<ul>
+<li>Stream<T> distinct() : <br>      Returns a stream consisting of the distinct elements.</li>
+<li>Stream<T> filter(Predicate&lt;? super T&gt; predicate)</li>
+<li>Stream<T> limit(long maxSize) : <br>      Truncates the stream to be no longer than maxSize in length.</li>
+<li><R> Stream<R> map(Function&lt;? super T,? extends R&gt; mapper) : <br>      Returns a stream consisting of the results of applying the given function to the elements of this stream.</li>
+<li>Stream<T> peek(Consumer&lt;? super T&gt; action)</li>
+<li>Stream<T> sorted(Comparator&lt;? super T&gt; comparator)</li>
+</ul>
+</li>
+</ul>
+<p>上述列出的 operation 中的 peek() ，在需要 debug Stream Pipeline 時，可以搭配 System.out.print() 將 Pipeline 流通的元素印出。</p>
+<p>以下列出一部分 terminal operation ：</p>
+<ul>
+<li><strong>Terminal operations</strong>
+<ul>
+<li>boolean allMathch(Predicate&lt;? super T&gt; predicate)</li>
+<li>boolean anyMatch(Predicate&lt;? super T&gt; predicate)</li>
+<li>&lt;R,A&gt; R collect(Collector&lt;? super T,A,R&gt; collector)</li>
+<li>long count()</li>
+<li>T reduce(T identity, BinaryOperator<T> accumulator)</li>
+</ul>
+</li>
+</ul>
+<p>上述列出的 collect() operation 需要實作 Collector interface 的 Class 當作參數，Java 8 為此同時引進了 Collector interface 的
+實做 Class <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collectors.html">Collectors</a> 。使用 Collectors 提供
+的 static methods 像是 toList() 、 toMap() 、 toSet() 等等，直接將最終的輸出串流包裹進 Collections 裡。</p>
+<p>最後，附上 <a href="https://github.com/znkaihuang/java8-practice/tree/stream-practice">Stream API 的練習</a>。
+在 <a href="https://github.com/znkaihuang/java8-practice/blob/stream-practice/StreamPractice/src/com/lessayer/ProductListTest.java">ProductListTest.java</a> 列出 9 個問題，並且在最下方的 Answer Class 裡有每個問題的答案。</p>
+<p>在此以第 2 個問題為例：</p>
+<pre tabindex="0"><code>// Create a French food list containing only product name.
+</code></pre><p>根據題目需求，程式碼應該會是</p>
+<pre tabindex="0"><code>List&lt;String&gt; frenchProductNameList = productList.stream()
+				.filter(product -&gt; product.getPlaceOfOrigin().equals(&#34;France&#34;))
+				.map(Product::getName)
+				.collect(Collectors.toList());
+</code></pre><p>將結果輸出後比對 Answer.answer2 之後確認無誤。</p>
+<p>其餘的部份，讀者可以自行練習。</p>
+<ul class="pa0">
+  
+   <li class="list di">
+     <a href="/tags/java-8" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Java 8</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-functional_interface/">Java 8 - Functional Interface &amp; Method Reference</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-lambda_expression/">Java 8 - Lambda Expression</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C/">Java 8 新增特性</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://znkaihuang.github.io" >
+    &copy;  On avance 2022 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div></div>
+  </div>
+</footer>
+
+  </body>
+</html>
