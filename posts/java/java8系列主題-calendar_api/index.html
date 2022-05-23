@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Java8系列主題 Calendar API | On avance</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="開發應用程式時，如果應用程式必須支援多種語言或是應用程式會被散播到多個國家執行，在開發的過程中應用程式就必須考慮 internationlization (註1) 。
+一般而言，不同的地區與文化，除了使用的語言符號不同之外，還存在其他各種差異，例如：聲音、日期、時間、度量衡單位等，如果開發國際化應用程式就必須考量這些差異因素， Oracle 的 internationlization 教學上有列出一份 checklist 可以提供參考。">
+    <meta name="generator" content="Hugo 0.97.3" />
+    
+    
+    
+    
+      <meta name="robots" content="index, follow">
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.ea09cb1d7acc04e011e2cbaf51b0fe414b7ef882d7d49c89f261c58fe1fbe3aa.css" >
+
+
+
+    
+    
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Java8系列主題 Calendar API" />
+<meta property="og:description" content="開發應用程式時，如果應用程式必須支援多種語言或是應用程式會被散播到多個國家執行，在開發的過程中應用程式就必須考慮 internationlization (註1) 。
+一般而言，不同的地區與文化，除了使用的語言符號不同之外，還存在其他各種差異，例如：聲音、日期、時間、度量衡單位等，如果開發國際化應用程式就必須考量這些差異因素， Oracle 的 internationlization 教學上有列出一份 checklist 可以提供參考。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-calendar_api/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-23T08:50:54+08:00" />
+<meta property="article:modified_time" content="2022-05-23T08:50:54+08:00" />
+
+<meta itemprop="name" content="Java8系列主題 Calendar API">
+<meta itemprop="description" content="開發應用程式時，如果應用程式必須支援多種語言或是應用程式會被散播到多個國家執行，在開發的過程中應用程式就必須考慮 internationlization (註1) 。
+一般而言，不同的地區與文化，除了使用的語言符號不同之外，還存在其他各種差異，例如：聲音、日期、時間、度量衡單位等，如果開發國際化應用程式就必須考量這些差異因素， Oracle 的 internationlization 教學上有列出一份 checklist 可以提供參考。"><meta itemprop="datePublished" content="2022-05-23T08:50:54+08:00" />
+<meta itemprop="dateModified" content="2022-05-23T08:50:54+08:00" />
+<meta itemprop="wordCount" content="340">
+<meta itemprop="keywords" content="Java 8," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java8系列主題 Calendar API"/>
+<meta name="twitter:description" content="開發應用程式時，如果應用程式必須支援多種語言或是應用程式會被散播到多個國家執行，在開發的過程中應用程式就必須考慮 internationlization (註1) 。
+一般而言，不同的地區與文化，除了使用的語言符號不同之外，還存在其他各種差異，例如：聲音、日期、時間、度量衡單位等，如果開發國際化應用程式就必須考量這些差異因素， Oracle 的 internationlization 教學上有列出一份 checklist 可以提供參考。"/>
+
+      
+    
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        On avance
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/contact/" title="Contact page">
+              Contact
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div>
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        ARTICLES
+      </aside>
+      
+
+
+
+
+
+
+
+
+
+
+  <div id="sharing" class="mt3 ananke-socials">
+    
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Java8系列主題 Calendar API</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2022-05-23T08:50:54+08:00">May 23, 2022</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>開發應用程式時，如果應用程式必須支援多種語言或是應用程式會被散播到多個國家執行，在開發的過程中應用程式就必須考慮 internationlization (註1) 。</p>
+<p>一般而言，不同的地區與文化，除了使用的語言符號不同之外，還存在其他各種差異，例如：聲音、日期、時間、度量衡單位等，如果開發國際化應用程式就必須考量這些差異因素， Oracle 的 internationlization 教學上有列出一份 <a href="https://docs.oracle.com/javase/tutorial/i18n/intro/checklist.html">checklist</a> 可以提供參考。</p>
+<p>Java 針對 i18n 提供許多工具，本次介紹的主題 Calendar API 就是其中之一。 Calendar API 隸屬在 java.util.Calendar package 之下，早在 JDK 1.1 就已經存在。 Java 8 為 Calendar 類別引進新的 field (註2)，詳細的更新可以參考 <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/enhancements.8.html">Internationalization Enhancements in JDK 8</a> 。</p>
+<p>我主要會介紹 New Calendar and Locale APIs ，本篇文章主要涵蓋 Calendar API ，下一篇文章會是介紹 Locale API 以及 Java 8 引進的新功能。</p>
+<p>簡單介紹 Calendar 類別， Calendar 是抽象類別，主要提供將時間轉換為日曆中的年、月、日、星期等方法。 Java 提供的曆法有 Gregory (註3)、   Buddhist(註4) 、 Japanese (註5) ，由於國際通用的是 Gregory ，因此之後使用的 Calendar Type 都是 Gregory 。</p>
+<p>Java 同時也為 Calendar 這個抽象類別提供了實做類別 GregorianCalendar 。 呼叫 Calendar 提供的 getInstance() ，預設回傳的就是 GregorianCalendar 。</p>
+<pre tabindex="0"><code>Calendar calendar = Calendar.getInstance();
+</code></pre><p>getInstance() 還有其他版本的呼叫方式，如下：</p>
+<ul>
+<li>static Calendar getInstance()</li>
+<li>static Calendar getInstance(Locale aLocale)</li>
+<li>static Calendar getInstance(TimeZone zone)</li>
+<li>static Calendar getInstance(TimeZone zone, Locale aLocale)</li>
+</ul>
+<p>如果沒有特別指定 Locale 以及 TimeZone ，使用的就是系統當前所處的 Locale 及 TimeZone ，可以 System.out.print 產生的 calendar ，裡面會包含 TimeZone 資訊，當前的時間，以及系統的 milliseconds (註6)。</p>
+<pre tabindex="0"><code>java.util.GregorianCalendar[time=1653274451358,areFieldsSet=true,areAllFieldsSet=true,lenient=true,zone=sun.util.calendar.ZoneInfo[id=&#34;Asia/Taipei&#34;,offset=28800000,dstSavings=0,useDaylight=false,transitions=42,lastRule=null],firstDayOfWeek=1,minimalDaysInFirstWeek=1,ERA=1,YEAR=2022,MONTH=4,WEEK_OF_YEAR=22,WEEK_OF_MONTH=4,DAY_OF_MONTH=23,DAY_OF_YEAR=143,DAY_OF_WEEK=2,DAY_OF_WEEK_IN_MONTH=4,AM_PM=0,HOUR=10,HOUR_OF_DAY=10,MINUTE=54,SECOND=11,MILLISECOND=358,ZONE_OFFSET=28800000,DST_OFFSET=0]
+</code></pre><p>Calendar 提供了 get() 、 set() 、 add() 、 roll() 等方法，詳細的使用方法需要配合 Calendar 的成員變數，詳細可以參考 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Calendar.html">Calendar API</a>，在此使用 get() 當作範例：</p>
+<pre tabindex="0"><code>System.out.println(calendar.get(Calendar.YEAR) + &#34;/&#34; + (calendar.get(Calendar.MONTH) + 1) + &#34;/&#34; + calendar.get(Calendar.DAY_OF_MONTH));
+=============================
+Execution result:
+2022/5/23
+</code></pre><p>Java 8 為 getDisplayName() 及 getDisplayNames() 這兩個方法提供新的格式，分別是：</p>
+<ul>
+<li>Calendar.SHORT_FORMAT</li>
+<li>Calendar.LONG_FORMAT</li>
+<li>Calendar.SHORT_STANDALONE</li>
+<li>Calendar.LONG_STANDALONE</li>
+</ul>
+<p>讓我們先看一下 getDisplayName() 的方法及範例：</p>
+<blockquote>
+<p><strong>String getDisplayName(int field, int style, Locale locale)</strong></p>
+<p>Returns the string representation of the calendar field value in the given style and locale.</p>
+</blockquote>
+<pre tabindex="0"><code>System.out.print(&#34;SHORT_FORMAT : &#34; + Calendar.SHORT_FORMAT + &#34; &#34;);
+System.out.println(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT_FORMAT, Locale.TAIWAN));
+System.out.print(&#34;SHORT_STANDALONE : &#34; + Calendar.SHORT_STANDALONE + &#34; &#34;);
+System.out.println(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT_STANDALONE, Locale.TAIWAN));
+System.out.print(&#34;LONG_FORMAT : &#34; + Calendar.LONG_FORMAT + &#34; &#34;);
+System.out.println(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG_FORMAT, Locale.TAIWAN));
+System.out.print(&#34;LONG_STANDALONE : &#34; + Calendar.LONG_STANDALONE + &#34; &#34;);
+System.out.println(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG_STANDALONE, Locale.TAIWAN));
+
+=============================
+Execution result:
+SHORT_FORMAT : 1 週一
+SHORT_STANDALONE : 32769 週一
+LONG_FORMAT : 2 星期一
+LONG_STANDALONE : 32770 星期一
+</code></pre><p>STANDALONE 和 FORMAT 概念相同，差別僅在於兩者是不同的 Integer 。</p>
+<p>值得一提的是，並不是所有的 Calendar 成員變數，在給定 Locale 的情況下都呼叫 getDisplayName() 產生根據不同 Locale 的對應字串，只針對成員變數 ERA 、MONTH 、DAY_OF_WEEK 、AM_PM 有回應，如果是其他的成員變數則回傳 null 。</p>
+<pre tabindex="0"><code>System.out.println(calendar.getDisplayName(Calendar.ERA, Calendar.LONG_FORMAT, Locale.TAIWAN));
+System.out.println(calendar.getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT, Locale.TAIWAN));
+System.out.println(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG_FORMAT, Locale.TAIWAN));
+System.out.println(calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG_FORMAT, Locale.TAIWAN));
+System.out.println(calendar.getDisplayName(Calendar.DAY_OF_MONTH, Calendar.LONG_FORMAT, Locale.TAIWAN));
+=============================
+Execution result:
+西元
+5月
+星期一
+上午
+null
+</code></pre><p>最後，附上 <a href="https://github.com/znkaihuang/java8-practice/tree/calendar-practice">Calendar API 的練習</a> ，只需要按照
+<a href="https://github.com/znkaihuang/java8-practice/blob/calendar-practice/CalendarPractice/src/com/lessayer/CalendarPractice.java">CalendarPractice.java</a> 的指示完成程式碼即可。</p>
+<small>
+註1：國際化，從第一個字母 i 到最後一個字母 n 中間間隔了 18 個字母，簡寫為 i18n
+<p>註2：成員變數</p>
+<p>註3：公曆</p>
+<p>註4：佛曆</p>
+<p>註5：日本曆</p>
+<p>註6：系統的 milliseconds 是紀錄自 1970 年 1 月 1 日 0 點 0 分 0 秒到現在所今過得毫秒
+</small></p>
+<ul class="pa0">
+  
+   <li class="list di">
+     <a href="/tags/java-8" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Java 8</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-stream_api/">Java 8 - Stream API</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-functional_interface/">Java 8 - Functional Interface &amp; Method Reference</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-lambda_expression/">Java 8 - Lambda Expression</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C/">Java 8 新增特性</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://znkaihuang.github.io" >
+    &copy;  On avance 2022 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div></div>
+  </div>
+</footer>
+
+  </body>
+</html>

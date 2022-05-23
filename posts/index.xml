@@ -8,6 +8,16 @@
     <language>en-us</language>
     <lastBuildDate>Thu, 02 Mar 2017 12:00:00 -0500</lastBuildDate><atom:link href="https://znkaihuang.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Java8系列主題 Calendar API</title>
+      <link>https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-calendar_api/</link>
+      <pubDate>Mon, 23 May 2022 08:50:54 +0800</pubDate>
+      
+      <guid>https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-calendar_api/</guid>
+      <description>開發應用程式時，如果應用程式必須支援多種語言或是應用程式會被散播到多個國家執行，在開發的過程中應用程式就必須考慮 internationlization (註1) 。
+一般而言，不同的地區與文化，除了使用的語言符號不同之外，還存在其他各種差異，例如：聲音、日期、時間、度量衡單位等，如果開發國際化應用程式就必須考量這些差異因素， Oracle 的 internationlization 教學上有列出一份 checklist 可以提供參考。</description>
+    </item>
+    
+    <item>
       <title>Java 8 - Stream API</title>
       <link>https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-stream_api/</link>
       <pubDate>Fri, 06 May 2022 09:46:47 +0800</pubDate>
