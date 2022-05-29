@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Java 8 - Locale API | On avance</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="開發國際化應用程式需要考慮程式運行的所在區域以及所在區域使用的語言， 在原生的 JDK 中有個類別，產生的物件會紀錄語言以及區域的資訊，這個類別就是 Locale 。有了 Locale 這個分辨語言、區域的類別，就可以根據不同的 Locale 讓程式有不同的行為。">
+    <meta name="generator" content="Hugo 0.97.3" />
+    
+    
+    
+    
+      <meta name="robots" content="index, follow">
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.ea09cb1d7acc04e011e2cbaf51b0fe414b7ef882d7d49c89f261c58fe1fbe3aa.css" >
+
+
+
+    
+    
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Java 8 - Locale API" />
+<meta property="og:description" content="開發國際化應用程式需要考慮程式運行的所在區域以及所在區域使用的語言， 在原生的 JDK 中有個類別，產生的物件會紀錄語言以及區域的資訊，這個類別就是 Locale 。有了 Locale 這個分辨語言、區域的類別，就可以根據不同的 Locale 讓程式有不同的行為。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-locale_api/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-29T11:06:37+08:00" />
+<meta property="article:modified_time" content="2022-05-29T11:06:37+08:00" />
+
+<meta itemprop="name" content="Java 8 - Locale API">
+<meta itemprop="description" content="開發國際化應用程式需要考慮程式運行的所在區域以及所在區域使用的語言， 在原生的 JDK 中有個類別，產生的物件會紀錄語言以及區域的資訊，這個類別就是 Locale 。有了 Locale 這個分辨語言、區域的類別，就可以根據不同的 Locale 讓程式有不同的行為。"><meta itemprop="datePublished" content="2022-05-29T11:06:37+08:00" />
+<meta itemprop="dateModified" content="2022-05-29T11:06:37+08:00" />
+<meta itemprop="wordCount" content="437">
+<meta itemprop="keywords" content="Java 8," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java 8 - Locale API"/>
+<meta name="twitter:description" content="開發國際化應用程式需要考慮程式運行的所在區域以及所在區域使用的語言， 在原生的 JDK 中有個類別，產生的物件會紀錄語言以及區域的資訊，這個類別就是 Locale 。有了 Locale 這個分辨語言、區域的類別，就可以根據不同的 Locale 讓程式有不同的行為。"/>
+
+      
+    
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        On avance
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/contact/" title="Contact page">
+              Contact
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div>
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        ARTICLES
+      </aside>
+      
+
+
+
+
+
+
+
+
+
+
+  <div id="sharing" class="mt3 ananke-socials">
+    
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Java 8 - Locale API</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2022-05-29T11:06:37+08:00">May 29, 2022</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>開發國際化應用程式需要考慮程式運行的所在區域以及所在區域使用的語言， 在原生的 JDK 中有個類別，產生的物件會紀錄語言以及區域的資訊，這個類別就是 Locale 。有了 Locale 這個分辨語言、區域的類別，就可以根據不同的 Locale 讓程式有不同的行為。</p>
+<p>假設有個程式能夠根據使用者偏好的語言產生不同的打招呼方式，這個程式預設提供中文的寒暄方式，但同時支援英文、法文。現在已經準備了上述語言的日常寒暄用法：</p>
+<pre tabindex="0"><code>MessagesBundle.properties
+===============================
+greetings = &#34;寒暄&#34;
+hello = 你好!
+nice_to_meet_you = 很高興看到你!
+how_are_you = 你好嗎?
+goodbye = 再見!
+see_you_tomorrow = 明天見!
+===============================
+MessagesBundle_en_US.properties
+===============================
+greetings = &#34;Greetings&#34;
+hello = Hello!
+nice_to_meet_you = Nice to meet you!
+how_are_you = How are you?
+goodbye = Goodbye!
+see_you_tomorrow = See you tomorrow!
+===============================
+MessagesBundle_fr.properties
+===============================
+greetings = &#34;Salutations&#34;
+hello = Bonjour!
+nice_to_meet_you = Enchanté(e)!
+how_are_you = Comment allez vous?
+goodbye = Au revoir!
+see_you_tomorrow = À demain!
+</code></pre><p>我們就可以利用以下的程式碼，在給定 Locale 後進而產生不同的輸出回應使用者。</p>
+<pre tabindex="0"><code>Locale = new Locale(&#34;fr&#34;);
+ResourceBundle messageBundle = ResourceBundle.getBundle(&#34;MessagesBundle&#34;, locale);
+System.out.println(&#34;=====&#34; + messageBundle.getString(&#34;greetings&#34;) + &#34;=====&#34;);
+Integer count = 1;
+for (String key : messageBundle.keySet()) {
+	if (!key.equals(&#34;greetings&#34;)) {
+		System.out.println(count++ + &#34;: &#34; + messageBundle.getString(key));
+	}
+}
+</code></pre><p>此外，同一種語言在不同的區域可能會有些微差異，像是英式英文與美式英文，或是法國使用的法文與加拿大法文也存在不同，諸如此類。不同的語言有各自代表的 Language code ，不同區域也有屬於自己的 Region code 。詳細可以參考 <a href="http://www.loc.gov/standards/iso639-2/php/code_list.php">Language code</a> 以及 <a href="https://www.iban.com/country-codes">Region code</a> 。</p>
+<p>在指定了 Langauge code 及 Region code 後就可以根據 Locale 的建構式產生物件。</p>
+<pre tabindex="0"><code>public Locale(String language,String country)
+public Locale(String language)
+</code></pre><p>或是呼叫 Locale.forLanguageTag 這個工廠方法</p>
+<pre tabindex="0"><code>static Locale forLanguageTag(String languageTag)
+</code></pre><p>直接使用 Language tag 產生 Locale 物件。 美式英文的 Language tag 是 &ldquo;en-US&rdquo; ，其中 &ldquo;en&rdquo; 代表英文的 Language code ，中間透過 &ldquo;-&rdquo; 連接， &ldquo;US&rdquo; 則是美國的 Region code ，其他 Language tag 像是 &ldquo;fr&rdquo; 、 &ldquo;fr-CA&rdquo; 、 &ldquo;zh-TW&rdquo; ， Language tag 的格式可以參考 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Locale.html">Locale API</a> 。</p>
+<p>Java 8 為 Locale 這個類別引進了一些新的功能，在此介紹 Locale 下的 filter() 、 filterTags() 以及 lookup() 。</p>
+<pre tabindex="0"><code>Locale.filter(List&lt;Local.LanguageRange&gt;, Collection&lt;Locale&gt;)
+Locale.filterTags(List&lt;Locale.LanguageRange&gt;, Collection&lt;String&gt;)
+Locale.lookup(List&lt;Local.LanguageRange&gt;, Collection&lt;Locale&gt;)
+</code></pre><p>filter() 和 filterTags() 這兩個 methods ，提供在給定語言的匹配程度及一群 Locale ，會根據匹配程度將給定的 Locale 進行排序，其中 LanguageRange 就是定義語言匹配程度的類別。</p>
+<p>舉例來說，現在定義德文(de)、英文(en)、法文(fr)、西班牙文(es)的相似度排序從最相近到最不同的排序為 [de, en, fr, es] ，如果現在有一群 Locale ，這群 Locale 的語言分別為 [es, zh-TW, en, fr] ，呼叫 filter() 以及 filterTags() 後，會得到排序清單 [en, fr, es, zh-TW] ， 值得注意的是因為沒有定義 &ldquo;zh-TW&rdquo; 和德文的匹配程度，因此兩者會被視為最不相同。</p>
+<p>至於 lookup() ，則是回傳匹配程度最高的 Locale ，以上述為例，由於這群 Locale 裡並不存在德文 &ldquo;de&rdquo;，因此回傳 &ldquo;en&rdquo; 的 Locale 。</p>
+<p>以下是使用 filter() 、 filterTags() 以及 lookup() 的程式碼的範例：</p>
+<pre tabindex="0"><code>Line 1: List&lt;Locale&gt; locales = Arrays.asList(Locale.FRANCE, Locale.CANADA_FRENCH, Locale.US, Locale.TAIWAN, Locale.ITALY);
+Line 2: List&lt;String&gt; localeStrings = Arrays.asList(&#34;fr-FR&#34;, &#34;fr-CA&#34;, &#34;en-US&#34;, &#34;zh-TW&#34;, &#34;it-IT&#34;);
+Line 3: List&lt;LanguageRange&gt; priorities = LanguageRange.parse(&#34;jp, zh-tw;q=0.65, en;q=0.5, en-US;q=0.5, fr;q=0.4, fr-fr;q=0.4, fr-ca;q=0.4, es;q=0.2, it;q=0.1, it-it;q=0.1&#34;);
+Line 4: System.out.println(Locale.filter(priorities, locales));
+Line 5: System.out.println(Locale.filterTags(priorities, localeStrings));
+Line 6: System.out.println(Locale.lookup(priorities, locales));
+
+=============================
+Execution result:
+[zh_TW, en_US, fr_FR, fr_CA, it_IT]
+[zh-TW, en-US, fr-FR, fr-CA, it-IT]
+zh_TW
+</code></pre><p>上述程式碼的 Line 3 定義了其他語言與日文 &ldquo;jp&rdquo; 的匹配程度，每個語言後面都有 q 代表相似的權重。在定義的規則中，繁體中文 &ldquo;zh-tw&rdquo; 和 日文 &ldquo;jp&rdquo; 是最相似的，權重有 0.65 ，最不同的則是義氏義大利文 &ldquo;it-it&rdquo; ，權重只有 0.1 。根據規則字串， LanguageRange.parse() 會自動產生 Priority list ，以語言匹配程度的降冪排序。有了 Priority list 後，就可以呼叫 Locale 的 filter() 、 filterTags() 以及 lookup() 取得匹配結果。</p>
+<p>最後提供練習，程式碼 <a href="https://github.com/znkaihuang/java8-practice/blob/locale-practice/LocalePractice/src/com/lessayer/practice/LocalePractice.java">LocalePractice.java</a> 給定了一組 Priority list 以及一組 Locale list ，你需要完成 selectClosetLocale() 這個 method 使的輸入 Language tag 後會回傳匹配程度最接近的 Locale 。</p>
+<p>有以下幾點需要注意：</p>
+<ol>
+<li>你需要設計自己的語言匹配程度規則，必須以日文 &ldquo;jp&rdquo; 為基礎並每個語言定義權重，由相近到相異依序為</li>
+</ol>
+<blockquote>
+<p>&ldquo;zh-tw&rdquo;, &ldquo;en&rdquo;, &ldquo;en-US&rdquo;, &ldquo;fr&rdquo;, &ldquo;fr-ca&rdquo;, &ldquo;es&rdquo;, &ldquo;it&rdquo;</p>
+</blockquote>
+<ol start="2">
+<li>由於預設的匹配規則是和日文相比，在 selectClosetLocale() ，必須根據給定的 Language tag 在重新計算匹配規則，若給定的 Language tag 為義大利文 &ldquo;it&rdquo; ，則必須翻轉原本的規則成</li>
+</ol>
+<blockquote>
+<p>&ldquo;it&rdquo;, &ldquo;es&rdquo;, &ldquo;fr&rdquo;, &ldquo;fr-ca&rdquo;, &ldquo;en&rdquo;, &ldquo;en-US&rdquo;, &ldquo;zh-tw&rdquo;, &ldquo;jp&rdquo;</p>
+</blockquote>
+<ol start="3">
+<li>給定的 Language tags 與預期呼叫 selectClosetLocale() 的結果分別為：</li>
+</ol>
+<blockquote>
+<p>&ldquo;jp&rdquo;, &ldquo;de&rdquo;, &ldquo;en&rdquo;, &ldquo;fr&rdquo;, &ldquo;es&rdquo;, &ldquo;fr-ca&rdquo;, &ldquo;it&rdquo;</p>
+<p>&ldquo;zh_TW&rdquo;, &ldquo;en_US&rdquo;, &ldquo;fr&rdquo;, &ldquo;es&rdquo;, &ldquo;fr_CA&rdquo;, &ldquo;es&rdquo;</p>
+</blockquote>
+<ul class="pa0">
+  
+   <li class="list di">
+     <a href="/tags/java-8" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Java 8</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-calendar_api/">Java 8 - Calendar API</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-stream_api/">Java 8 - Stream API</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-functional_interface/">Java 8 - Functional Interface &amp; Method Reference</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-lambda_expression/">Java 8 - Lambda Expression</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C/">Java 8 新增特性</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://znkaihuang.github.io" >
+    &copy;  On avance 2022 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div></div>
+  </div>
+</footer>
+
+  </body>
+</html>
