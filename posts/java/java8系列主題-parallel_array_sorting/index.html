@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Java 8 - Parallel Array Sorting | On avance</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Java 早在 1.2 引進了 Arrays 類別，作為提供 Array manipulating 的類別， Arrays 裡的每個 method 都是 static method ，因此不需要對 Arrays 類別進行初始化就可以直接使用。">
+    <meta name="generator" content="Hugo 0.97.3" />
+    
+    
+    
+    
+      <meta name="robots" content="index, follow">
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.ea09cb1d7acc04e011e2cbaf51b0fe414b7ef882d7d49c89f261c58fe1fbe3aa.css" >
+
+
+
+    
+    
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Java 8 - Parallel Array Sorting" />
+<meta property="og:description" content="Java 早在 1.2 引進了 Arrays 類別，作為提供 Array manipulating 的類別， Arrays 裡的每個 method 都是 static method ，因此不需要對 Arrays 類別進行初始化就可以直接使用。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://znkaihuang.github.io/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-parallel_array_sorting/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-07T14:42:45+08:00" />
+<meta property="article:modified_time" content="2022-06-07T14:42:45+08:00" />
+
+<meta itemprop="name" content="Java 8 - Parallel Array Sorting">
+<meta itemprop="description" content="Java 早在 1.2 引進了 Arrays 類別，作為提供 Array manipulating 的類別， Arrays 裡的每個 method 都是 static method ，因此不需要對 Arrays 類別進行初始化就可以直接使用。"><meta itemprop="datePublished" content="2022-06-07T14:42:45+08:00" />
+<meta itemprop="dateModified" content="2022-06-07T14:42:45+08:00" />
+<meta itemprop="wordCount" content="240">
+<meta itemprop="keywords" content="Java 8," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java 8 - Parallel Array Sorting"/>
+<meta name="twitter:description" content="Java 早在 1.2 引進了 Arrays 類別，作為提供 Array manipulating 的類別， Arrays 裡的每個 method 都是 static method ，因此不需要對 Arrays 類別進行初始化就可以直接使用。"/>
+
+      
+    
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        On avance
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/contact/" title="Contact page">
+              Contact
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div>
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        ARTICLES
+      </aside>
+      
+
+
+
+
+
+
+
+
+
+
+  <div id="sharing" class="mt3 ananke-socials">
+    
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Java 8 - Parallel Array Sorting</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2022-06-07T14:42:45+08:00">June 7, 2022</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>Java 早在 1.2 引進了 <a href="https://docs.oracle.com/javase/8/docs/api/index.html">Arrays</a> 類別，作為提供 Array manipulating 的類別， Arrays 裡的每個 method 都是 static method ，因此不需要對 Arrays 類別進行初始化就可以直接使用。</p>
+<p>在最初的 1.2 版時， Arrays 類別已經提供 sort() method 供開發人員使用，然而這時的 sort() 僅是 single thread method 。之後隨著多核 CPU 的商業化普及，為了能更好的利用 CPU 效能，Java 8 引進了 parallelSort() method ，當要排序的 Array 非常龐大時，使用 parallelSort() 進行排序的時間會明顯少於使用傳統 sort() 所需時間。</p>
+<p>parallelSort() 使用了 <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/forkjoin.html">Fork/Join</a> framework ，使程式能夠充分利用多核系統提昇效能。 Fork/Join framework 採用 <a href="https://en.wikipedia.org/wiki/Work_stealing">work stealing</a> 演算法，當一個 thread 完成它所有的工作時，就偷其他仍在忙碌中的 thread 的工作。採用 Fork/Join framework 的程式碼會有以下的架構：</p>
+<pre tabindex="0"><code>if (my portion of the work is small enough)
+  do the work directly
+else
+  split my work into two pieces
+  invoke the two pieces and wait for the results
+</code></pre><p>從 parallelSort() 的實作中，一步步回溯程式呼叫，也可以觀察到類似的架構存在。以 parallelSort(int[] a) 作為程式呼叫的開頭，parallelSort(int[] a) 程式碼如下：</p>
+<pre tabindex="0"><code>public static void parallelSort(int[] a) {
+    DualPivotQuicksort.sort(a, ForkJoinPool.getCommonPoolParallelism(), 0, a.length);
+}
+</code></pre><p>可以看到 Arrays.paralleSort() 僅是直接呼叫 DualPivotQuicksort.sort() ，如果繼續觀察 DualPivotQuicksort.sort() 的實作程式碼：</p>
+<pre tabindex="0"><code>static void sort(int[] a, int parallelism, int low, int high) {
+    int size = high - low;
+
+    if (parallelism &gt; 1 &amp;&amp; size &gt; MIN_PARALLEL_SORT_SIZE) {
+        int depth = getDepth(parallelism, size &gt;&gt; 12);
+        int[] b = depth == 0 ? null : new int[size];
+        new Sorter(null, a, b, low, size, low, depth).invoke();
+    } else {
+        sort(null, a, 0, low, high);
+    }
+}
+</code></pre><p>便可以觀察到 DualPivotQuicksort.sort() 恰好符合 Fork/Join framework 的架構，差別在於 if-else 的判斷式剛好相反而已。</p>
+<p>儘管 parallelSort() 在 Array 龐大時有明顯優於 sort() 的排序效能，但是就一般 Array 而言，使用 parallelSort() 並非總是最好的選擇，畢竟 multi-thread 程式遠比單一 thread 複雜，越複雜的程式內部溝通的成本會越高。</p>
+<p>那究竟 Array 長度多少時， parallelSort() 會是最佳的排序選擇？以下的測試數據可以提供參考。</p>
+<p>時間單位為 nanosecond ，針對不同的 Array 長度，統計 1000 次排序所需時間取平均，得到表格及折線圖如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="/images/java/table-chart.png" alt="TableChart.png"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><small>sort() 與 parallelSort() 平均執行時間比較表格 <small></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="/images/java/line-graph.png" alt="LineGrapsh.png"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><small>sort() 與 parallelSort() 平均執行時間比較曲線圖 <small></td>
+</tr>
+</tbody>
+</table>
+<p>從上述圖表可以驗證，確實在 Array 長度短 (上述例子為長度 10) 的情況下， sort() 確實有較好的效能，當 Array 長度較長 (長度超過 100) ，選擇 parallelSort() 更有效率。</p>
+<ul class="pa0">
+  
+   <li class="list di">
+     <a href="/tags/java-8" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Java 8</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-locale_api/">Java 8 - Locale API</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-calendar_api/">Java 8 - Calendar API</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-stream_api/">Java 8 - Stream API</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-functional_interface/">Java 8 - Functional Interface &amp; Method Reference</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C-lambda_expression/">Java 8 - Lambda Expression</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/java/java8%E7%B3%BB%E5%88%97%E4%B8%BB%E9%A1%8C/">Java 8 新增特性</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://znkaihuang.github.io" >
+    &copy;  On avance 2022 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div></div>
+  </div>
+</footer>
+
+  </body>
+</html>
