@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>並行運算與平行運算差異 | On avance</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="並行運算 ( Concurrent computing ) 與平行運算 ( Parallel computing ) 名稱相似，但兩者意含不同。並行運算著重在系統允許多項任務在一定時間內同時進行；平行運算強調藉由分治 ( Divide and conquer) 提昇執行任務的效能。">
+    <meta name="generator" content="Hugo 0.97.3" />
+    
+    
+    
+    
+      <meta name="robots" content="index, follow">
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.ea09cb1d7acc04e011e2cbaf51b0fe414b7ef882d7d49c89f261c58fe1fbe3aa.css" >
+
+
+
+    
+    
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="並行運算與平行運算差異" />
+<meta property="og:description" content="並行運算 ( Concurrent computing ) 與平行運算 ( Parallel computing ) 名稱相似，但兩者意含不同。並行運算著重在系統允許多項任務在一定時間內同時進行；平行運算強調藉由分治 ( Divide and conquer) 提昇執行任務的效能。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://znkaihuang.github.io/posts/parallel_computing/%E4%B8%A6%E8%A1%8C%E9%81%8B%E7%AE%97%E8%88%87%E5%B9%B3%E8%A1%8C%E9%81%8B%E7%AE%97%E5%B7%AE%E7%95%B0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-04T13:38:42+08:00" />
+<meta property="article:modified_time" content="2022-07-04T13:38:42+08:00" />
+
+<meta itemprop="name" content="並行運算與平行運算差異">
+<meta itemprop="description" content="並行運算 ( Concurrent computing ) 與平行運算 ( Parallel computing ) 名稱相似，但兩者意含不同。並行運算著重在系統允許多項任務在一定時間內同時進行；平行運算強調藉由分治 ( Divide and conquer) 提昇執行任務的效能。"><meta itemprop="datePublished" content="2022-07-04T13:38:42+08:00" />
+<meta itemprop="dateModified" content="2022-07-04T13:38:42+08:00" />
+<meta itemprop="wordCount" content="83">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="並行運算與平行運算差異"/>
+<meta name="twitter:description" content="並行運算 ( Concurrent computing ) 與平行運算 ( Parallel computing ) 名稱相似，但兩者意含不同。並行運算著重在系統允許多項任務在一定時間內同時進行；平行運算強調藉由分治 ( Divide and conquer) 提昇執行任務的效能。"/>
+
+      
+    
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        On avance
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/contact/" title="Contact page">
+              Contact
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div>
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        ARTICLES
+      </aside>
+      
+
+
+
+
+
+
+
+
+
+
+  <div id="sharing" class="mt3 ananke-socials">
+    
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">並行運算與平行運算差異</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2022-07-04T13:38:42+08:00">July 4, 2022</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>並行運算 ( Concurrent computing ) 與平行運算 ( Parallel computing ) 名稱相似，但兩者意含不同。並行運算著重在系統允許多項任務在一定時間內同時進行；平行運算強調藉由分治 ( Divide and conquer) 提昇執行任務的效能。</p>
+<p><strong>並行運算</strong></p>
+<p>並行運算允許多項任務在一定時間內同時存在並交錯進行，一項任務可以不等待所有其他任務完成逕自執行。與並行運算相反的概念是順序運算 ( Sequential computing ) ，順序運算代表在當前任務完成前，其他任務不能被執行。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="/images/parallel_computing/concurrent-computing.png" alt="concurrent-computing"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><small><em><strong>圖一、並行運算</strong></em><small></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="/images/parallel_computing/sequential-computing.png" alt="sequential-computing"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><small><em><strong>圖二、順序運算</strong></em><small></td>
+</tr>
+</tbody>
+</table>
+<p>程序 ( Process ) 並行運算體現在作業系統採用時間分割 ( Time slicing ) ，使的多項程序同時存在並交錯執行；執行緒 ( Thread ) 的並行體現在單一程序實踐多執行緒。</p>
+<p>值得注意的是，任何一種形式的並行運算，都必須避免競爭危害 ( Race condition )。競爭危害可以被定義為：「由於事件在相對時間下的不預期重大依賴導致的異常行為」(原文出自 <a href="https://dwheeler.com/secure-programs/Secure-Programs-HOWTO/avoid-race.html">Avoid Race Conditions</a> )。例如，多項程序嘗試修改同一份文件，但由於並行運算導致文件的最終結果不符合原先預期。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="/images/parallel_computing/race-condition.png" alt="race-condition"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><small><em><strong>圖三、由於競爭危害導致文件結果可能不如預期</strong></em><small></td>
+</tr>
+</tbody>
+</table>
+<p>為了避免競爭危害，採用並行運算應該同時考慮妥善控制機制。</p>
+<p><strong>平行運算</strong></p>
+<p>平行運算採用分治法 ( Divide and conquer ) 通常會將一項任務拆分成多項相似的子任務，每項子任務被分配到不同的運算單元上，彼此獨立執行互不影響，再將子任務的執行結果合併得到最終任務結果。由於平行運算利用多組運算單元，因此比只指利用單一運算單元，平行運算能夠提昇執行任務的效率。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="/images/parallel_computing/divide-and-conquer.png" alt="divide-and-conquer"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><small><em><strong>圖四、分治法</strong></em><small></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="/images/parallel_computing/parallel-computing.png" alt="parallel-computing"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><small><em><strong>圖五、平行運算</strong></em><small></td>
+</tr>
+</tbody>
+</table>
+<p>平行運算倚賴硬體支援，例如存在多組運算單元的單一設備上進行平行運算，或是在能夠彼此溝通的多台具運算能力的設備上進行。</p>
+<p>儘管有多組運算元，運算元數量與執行效率並未呈現線性關係，阿姆達爾定律 ( Amdahl&rsquo;s law ) 描述兩者之間關係，造成此現象的其中一原因在於運算元數量越多所造成的溝通成本越高，可看出平行運算的瓶頸在於如何溝通協調各組運算元。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="/images/parallel_computing/AmdahlsLaw.svg.png" alt="AmdahlsLaw"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><small><em><strong>圖六、阿姆達爾定律</strong></em><small></td>
+</tr>
+</tbody>
+</table>
+<p><strong>參考資料</strong></p>
+<ul>
+<li><a href="https://www.computerhope.com/jargon/c/concurrent-computing.htm">Concurrent computing</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Concurrent_computing">Concurrent computing Wiki</a></li>
+<li><a href="https://dwheeler.com/secure-programs/Secure-Programs-HOWTO/avoid-race.html">Avoid Race Conditions</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Parallel_computing">Parallel computing Wiki</a></li>
+<li><a href="https://www.heavy.ai/technical-glossary/parallel-computing">Parallel Computing Definition</a></li>
+</ul>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://znkaihuang.github.io" >
+    &copy;  On avance 2022 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+    <a href="https://github.com/znkaihuang" target="_blank" class="github ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="GitHub link" rel="noopener" aria-label="follow on GitHub——Opens in a new window">
+      
+        <span class="icon"><svg style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+</span>
+      
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;"/>
+</svg>
+</span></a>
+  
+</div></div>
+  </div>
+</footer>
+
+  </body>
+</html>

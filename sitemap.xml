@@ -3,7 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://znkaihuang.github.io/</loc>
-    <lastmod>2022-07-04T12:32:18+08:00</lastmod>
+    <lastmod>2022-07-04T13:38:42+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://znkaihuang.github.io/posts/parallel_computing/%E4%B8%A6%E8%A1%8C%E9%81%8B%E7%AE%97%E8%88%87%E5%B9%B3%E8%A1%8C%E9%81%8B%E7%AE%97%E5%B7%AE%E7%95%B0/</loc>
+    <lastmod>2022-07-04T13:38:42+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
