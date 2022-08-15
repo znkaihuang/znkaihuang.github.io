@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>位元運算 on On avance</title>
+    <link>https://znkaihuang.github.io/tags/%E4%BD%8D%E5%85%83%E9%81%8B%E7%AE%97/</link>
+    <description>Recent content in 位元運算 on On avance</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 15 Aug 2022 11:52:13 +0800</lastBuildDate><atom:link href="https://znkaihuang.github.io/tags/%E4%BD%8D%E5%85%83%E9%81%8B%E7%AE%97/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>位元運算（一）</title>
+      <link>https://znkaihuang.github.io/posts/bitwise_operation/%E4%BD%8D%E5%85%83%E9%81%8B%E7%AE%97%E4%B8%80/</link>
+      <pubDate>Mon, 15 Aug 2022 11:52:13 +0800</pubDate>
+      
+      <guid>https://znkaihuang.github.io/posts/bitwise_operation/%E4%BD%8D%E5%85%83%E9%81%8B%E7%AE%97%E4%B8%80/</guid>
+      <description>位元運算是程式設計中對二進位數的操作，與一般加減及乘除運算相比，有運算速度更快、耗費資運更少的優勢，是優化程式非常有效的方式。
+Java 提供位元運算子以及移位運算子：其中位元運算子包含 OR (|) 、AND (&amp;amp;) 、XOR（^）、NOT（~），移位運算子包含算術右移位運算子（&amp;gt;&amp;gt;&amp;gt;）、右移位運算子（&amp;gt;&amp;gt;）以及左移位運算子（&amp;lt;&amp;lt;）。
+位元運算技巧 以下列出常見並且實用的位元運算，使用 1s 以及 0s 來表示全為 1 或是 0 的二進位序列：</description>
+    </item>
+    
+  </channel>
+</rss>
